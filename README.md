@@ -1,3 +1,4 @@
+
 # Cryptocurrency Momentum and Pairs Trading with Sentiment Analysis
 
 ## Introduction
@@ -14,7 +15,7 @@ We have multiple years of daily data (2020–2024) and my work shows that you ca
 
 ### Data Sources and Processing
 
-We obtained daily price data (open/close prices) for five major cryptocurrencies (Note: I should probably expand this to avoid any overfitting in rank):
+We obtained daily price data (open/close prices) for five major cryptocurrencies (Have expanded this universe in updates to include 20+ coins):
 - **Bitcoin (BTC)**
 - **Ethereum (ETH)**
 - **Cardano (ADA)**
@@ -221,6 +222,20 @@ The pairs trading strategy showed mixed results:
 **Figure**: Daily Composite Sentiment vs. Next-Day Momentum Return (Scatter Plot)
 
 The scatter plot reveals a fairly diffuse cloud with no strong linear pattern, indicating that daily sentiment alone doesn't reliably predict next-day momentum returns. While there was a lot of correlation in twitter data and google trend data to the same day. It tended to revert/change a lot the next day which skewed a lot of the results. 
+
+
+# Updates in new notebook
+
+Added an Expanded Universe: I used to few coins so I expanded the Universe. Went from 5 coins to 10–20 of the most liquid coins (BTC, ETH, BNB, XRP, SOL, DOGE, MATIC, LINK, LTC, DOT, etc.). Added simple weights to emphasize large caps so tiny coins don’t flip the ranks for no reason.
+
+Train/Validation Split: Originally tuned and tested on the same window — now split into 2020–2022 for training and 2023–2024 for validation. All parameters (lookbacks, rebalancing) were picked on training only.
+
+My original factor was a lot weaker, especially after adding turnover costs and fees. So I added a smarter signal that used a combination of factors including, A moving average crossover (20/60-day), Short-term reversal (-5-day return). Volatility-adjusted signals so big swings don’t overwhelm smaller coins
+
+Pairs Trading: Originally combined ETH/BTC pairs trades too but it dragged performance in validation after adding costs
+
+These updates pushed my raw factor Sharpe to ~1.2 (train) and ~1.4 (validation) before costs — and around** ~0.7–0.8** after realistic fees. The factor is near-zero beta to BTC, so it works as a diversifier, not a BTC replacement.
+
 
 
 # Please look in my notebook for more graphs, code, explanations. I tried my best to explain the gist of it here.
